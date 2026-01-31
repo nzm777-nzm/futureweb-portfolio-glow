@@ -1,4 +1,5 @@
 import { ShoppingCart, Palette, CreditCard, LayoutDashboard, Wrench } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const services = [
   {
@@ -29,14 +30,16 @@ const services = [
 ];
 
 const Services = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
-    <section id="services" className="relative py-24 overflow-hidden">
+    <section ref={ref as React.RefObject<HTMLElement>} id="services" className="relative py-24 overflow-hidden">
       {/* Section Divider */}
       <div className="section-divider mb-24" />
 
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}>
           <p className="font-body text-primary uppercase tracking-widest mb-4">What I Do</p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold">
             <span className="text-foreground">My </span>
@@ -49,8 +52,8 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className="group relative p-8 rounded-lg bg-card border border-border hover:border-secondary transition-all duration-300 animate-fade-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`group relative p-8 rounded-lg bg-card border border-border hover:border-secondary transition-all duration-300 scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}
+              style={{ transitionDelay: `${index * 0.1}s` }}
             >
               {/* Icon */}
               <div className="w-16 h-16 rounded-lg bg-secondary/10 flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">

@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const projects = [
   {
@@ -40,8 +41,10 @@ const projects = [
 ];
 
 const Portfolio = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.05 });
+
   return (
-    <section id="portfolio" className="relative py-24 overflow-hidden">
+    <section ref={ref as React.RefObject<HTMLElement>} id="portfolio" className="relative py-24 overflow-hidden">
       {/* Section Divider */}
       <div className="section-divider mb-24" />
 
@@ -50,7 +53,7 @@ const Portfolio = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}>
           <p className="font-body text-primary uppercase tracking-widest mb-4">My Work</p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold">
             <span className="text-foreground">Featured </span>
@@ -63,8 +66,8 @@ const Portfolio = () => {
           {projects.map((project, index) => (
             <div
               key={project.title}
-              className="group relative rounded-lg overflow-hidden bg-card border border-border hover:border-primary transition-all duration-300 animate-fade-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`group relative rounded-lg overflow-hidden bg-card border border-border hover:border-primary transition-all duration-300 scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}
+              style={{ transitionDelay: `${index * 0.1}s` }}
             >
               {/* Project Image */}
               <div className="relative h-48 overflow-hidden">
