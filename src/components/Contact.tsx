@@ -1,8 +1,11 @@
 import { Mail } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Contact = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
-    <section id="contact" className="relative py-24 overflow-hidden">
+    <section ref={ref as React.RefObject<HTMLElement>} id="contact" className="relative py-24 overflow-hidden">
       {/* Section Divider */}
       <div className="section-divider mb-24" />
 
@@ -12,7 +15,7 @@ const Contact = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className={`text-center mb-12 scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}>
           <p className="font-body text-primary uppercase tracking-widest mb-4">Get In Touch</p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold mb-6">
             <span className="text-foreground">Let's Build Something </span>
@@ -24,7 +27,7 @@ const Contact = () => {
         </div>
 
         {/* Email CTA */}
-        <div className="flex flex-col items-center justify-center animate-fade-up">
+        <div className={`flex flex-col items-center justify-center scroll-hidden-scale ${isVisible ? 'scroll-visible-scale' : ''}`} style={{ transitionDelay: '0.2s' }}>
           <div className="p-8 rounded-2xl bg-card border border-border hover:border-primary transition-all duration-300 group">
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">

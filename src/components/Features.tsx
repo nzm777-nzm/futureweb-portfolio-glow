@@ -1,4 +1,5 @@
 import { Monitor, Shield, Server, BarChart3 } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const features = [
   {
@@ -24,14 +25,16 @@ const features = [
 ];
 
 const Features = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section ref={ref as React.RefObject<HTMLElement>} className="relative py-24 overflow-hidden">
       {/* Section Divider */}
       <div className="section-divider mb-24" />
 
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}>
           <p className="font-body text-primary uppercase tracking-widest mb-4">What I Offer</p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold">
             <span className="text-foreground">Why Choose </span>
@@ -44,8 +47,8 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={feature.title}
-              className="neon-card group animate-fade-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`neon-card group scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}
+              style={{ transitionDelay: `${index * 0.1}s` }}
             >
               <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                 <feature.icon className="w-7 h-7 text-primary" />

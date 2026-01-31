@@ -1,4 +1,5 @@
 import { Code2, Database, Cloud, Smartphone } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const skills = [
   { name: "React / Next.js", level: 95 },
@@ -17,8 +18,10 @@ const expertise = [
 ];
 
 const About = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
-    <section id="about" className="relative py-24 overflow-hidden">
+    <section ref={ref as React.RefObject<HTMLElement>} id="about" className="relative py-24 overflow-hidden">
       {/* Section Divider */}
       <div className="section-divider mb-24" />
 
@@ -27,7 +30,7 @@ const About = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 scroll-hidden ${isVisible ? 'scroll-visible' : ''}`}>
           <p className="font-body text-primary uppercase tracking-widest mb-4">About Me</p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold">
             <span className="text-foreground">The Developer Behind </span>
@@ -37,7 +40,7 @@ const About = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
           {/* Left Column - Avatar */}
-          <div className="flex justify-center lg:justify-end animate-fade-up">
+          <div className={`flex justify-center lg:justify-end scroll-hidden-left ${isVisible ? 'scroll-visible-x' : ''}`}>
             <div className="relative">
               {/* Avatar Container */}
               <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl neon-border overflow-hidden">
@@ -57,7 +60,7 @@ const About = () => {
           </div>
 
           {/* Right Column - Content */}
-          <div className="animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          <div className={`scroll-hidden-right ${isVisible ? 'scroll-visible-x' : ''}`} style={{ transitionDelay: '0.2s' }}>
             <h3 className="font-heading text-2xl font-semibold text-foreground mb-4">
               Full-Stack E-Commerce Specialist
             </h3>
@@ -98,7 +101,7 @@ const About = () => {
                   <div className="skill-bar">
                     <div
                       className="skill-bar-fill transition-all duration-1000"
-                      style={{ width: `${skill.level}%` }}
+                      style={{ width: isVisible ? `${skill.level}%` : '0%' }}
                     />
                   </div>
                 </div>
