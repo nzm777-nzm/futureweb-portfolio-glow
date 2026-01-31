@@ -43,10 +43,15 @@
     /* Custom Neon Variables */
     --neon-cyan: 180 100% 50%;
     --neon-purple: 270 100% 56%;
-    --neon-glow-cyan: 0 0 20px hsl(180 100% 50% / 0.5), 0 0 40px hsl(180 100% 50% / 0.3), 0 0 60px hsl(180 100% 50% / 0.1);
-    --neon-glow-purple: 0 0 20px hsl(270 100% 56% / 0.5), 0 0 40px hsl(270 100% 56% / 0.3), 0 0 60px hsl(270 100% 56% / 0.1);
-    --neon-text-glow: 0 0 10px hsl(180 100% 50% / 0.8), 0 0 20px hsl(180 100% 50% / 0.5), 0 0 30px hsl(180 100% 50% / 0.3);
-    --neon-border-glow: 0 0 15px hsl(180 100% 50% / 0.4);
+    /* Subtle glow for hover effects only */
+    --neon-glow-cyan: 0 0 15px hsl(180 100% 50% / 0.4), 0 0 30px hsl(180 100% 50% / 0.2);
+    --neon-glow-purple: 0 0 15px hsl(270 100% 56% / 0.4), 0 0 30px hsl(270 100% 56% / 0.2);
+    /* Very subtle heading glow - soft and low-intensity */
+    --neon-text-glow-subtle: 0 0 8px hsl(180 100% 50% / 0.4);
+    --neon-text-glow-purple-subtle: 0 0 8px hsl(270 100% 56% / 0.4);
+    /* Stronger glow for hover states */
+    --neon-text-glow-hover: 0 0 10px hsl(180 100% 50% / 0.6), 0 0 20px hsl(180 100% 50% / 0.3);
+    --neon-border-glow: 0 0 12px hsl(180 100% 50% / 0.3);
 
     /* Sidebar (keeping for compatibility) */
     --sidebar-background: 0 0% 5%;
@@ -79,15 +84,15 @@
 }
 
 @layer components {
-  /* Neon Text Effects */
+  /* Neon Text Effects - Subtle glow for headings only */
   .neon-text-cyan {
     color: hsl(var(--neon-cyan));
-    text-shadow: var(--neon-text-glow);
+    text-shadow: var(--neon-text-glow-subtle);
   }
 
   .neon-text-purple {
     color: hsl(var(--neon-purple));
-    text-shadow: 0 0 10px hsl(270 100% 56% / 0.8), 0 0 20px hsl(270 100% 56% / 0.5), 0 0 30px hsl(270 100% 56% / 0.3);
+    text-shadow: var(--neon-text-glow-purple-subtle);
   }
 
   /* Neon Border Effects */
@@ -123,10 +128,10 @@
   .neon-button:hover {
     background: hsl(var(--neon-cyan) / 0.1);
     box-shadow: var(--neon-glow-cyan);
-    text-shadow: var(--neon-text-glow);
+    text-shadow: var(--neon-text-glow-hover);
   }
 
-  /* Neon Link Underline */
+  /* Neon Link Underline - glow only on hover */
   .neon-link {
     @apply relative inline-block transition-colors duration-300;
   }
@@ -135,16 +140,16 @@
     content: '';
     @apply absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300;
     background: hsl(var(--neon-cyan));
-    box-shadow: var(--neon-border-glow);
   }
 
   .neon-link:hover::after {
     @apply w-full;
+    box-shadow: var(--neon-border-glow);
   }
 
   .neon-link:hover {
     color: hsl(var(--neon-cyan));
-    text-shadow: var(--neon-text-glow);
+    text-shadow: var(--neon-text-glow-hover);
   }
 
   /* Grid Background Animation */
